@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Jun 17 14:43:39 GMT+08:00 2013
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=false
+onejar.checkbox=false
+jarname=JmxAgent.jar
+manifest.mergeall=false
+manifest.mainclass=
+manifest.file=bin\\META-INF\\MANIFEST.MF
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Created-By: wjw465150@gmail.com
+Built-By: wjw465150
+Build-Jdk: 1.6
+Agent-Class: org.wjw.jmxagent.JmxAgent
+Can-Redefine-Classes: false
+Can-Retransform-Classes: false
+Can-Set-Native-Method-Prefix: false
+Premain-Class: org.wjw.jmxagent.JmxAgent
+
