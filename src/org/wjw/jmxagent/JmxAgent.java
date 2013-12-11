@@ -103,6 +103,9 @@ public class JmxAgent {
       System.out.println("Creating RMI connector server");
       JMXConnectorServer cs = JMXConnectorServerFactory.newJMXConnectorServer(hostUrl, env, mbs); 
       cs.start();
+
+      CleanupThread cleaner = new CleanupThread(cs);
+      cleaner.start();
     } catch (Exception e) {
       e.printStackTrace(System.err);
     }
