@@ -15,6 +15,8 @@ class CleanupThread extends Thread {
 
   private JMXConnectorServer server;
 
+  boolean stoped = false;
+
   CleanupThread(JMXConnectorServer pServer) {
     super("JmxAgent Cleaner");
     server = pServer;
@@ -53,6 +55,10 @@ class CleanupThread extends Thread {
             t.join();
           } catch (Exception ex) {
             ex.printStackTrace();
+            if (stoped == true) {
+              loop = false;
+              return;
+            }
           }
           break;
         }

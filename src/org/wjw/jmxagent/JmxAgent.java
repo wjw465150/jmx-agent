@@ -89,22 +89,27 @@ public class JmxAgent {
       System.out.println("Getting the platform's MBean Server");
       MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-      JMXServiceURL localUrl = new JMXServiceURL("service:jmx:rmi://" + localHostname + ":" + 
-          jmxPort + "/jndi/rmi://" + localHostname + ":" + 
-          jmxPort + "/jmxrmi");
+      JMXServiceURL localUrl = new JMXServiceURL("service:jmx:rmi://" + localHostname + ":" + jmxPort + "/jndi/rmi://"
+          + localHostname + ":" + jmxPort + "/jmxrmi");
 
-      JMXServiceURL hostUrl = new JMXServiceURL("service:jmx:rmi://" + jmxHost + ":" + 
-          jmxPort + "/jndi/rmi://" + jmxHost + ":" + 
-          jmxPort + "/jmxrmi");
-      
+      JMXServiceURL hostUrl = new JMXServiceURL("service:jmx:rmi://" + jmxHost + ":" + jmxPort + "/jndi/rmi://"
+          + jmxHost + ":" + jmxPort + "/jmxrmi");
 
       System.out.println("InetAddress.getLocalHost().getHostName() Connection URL: " + localUrl);
       System.out.println("Used host Connection URL: " + hostUrl);
       System.out.println("Creating RMI connector server");
-      JMXConnectorServer cs = JMXConnectorServerFactory.newJMXConnectorServer(hostUrl, env, mbs); 
+      JMXConnectorServer cs = JMXConnectorServerFactory.newJMXConnectorServer(hostUrl, env, mbs);
       cs.start();
 
-      CleanupThread cleaner = new CleanupThread(cs);
+      final CleanupThread cleaner = new CleanupThread(cs);
+
+      java.lang.Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+        public void run() {
+          cleaner.stoped = true;
+          cleaner.interrupt();
+        }
+      }));
+
       cleaner.start();
     } catch (Exception e) {
       e.printStackTrace(System.err);
