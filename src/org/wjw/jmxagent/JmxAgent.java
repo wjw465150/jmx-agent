@@ -62,6 +62,9 @@ public class JmxAgent {
 
       if (argsMap.containsKey("host")) {
         jmxHost = argsMap.get("host");
+        if (jmxHost.equals("*")) {
+          jmxHost = "0.0.0.0";
+        }
       }
 
       Map<String, Object> env = null;
@@ -86,6 +89,7 @@ public class JmxAgent {
 
       final String localHostname = InetAddress.getLocalHost().getHostName();
       LocateRegistry.createRegistry(jmxPort);
+      //LocateRegistry.createRegistry(jmxPort, RMISocketFactory.getDefaultSocketFactory(), RMISocketFactory.getDefaultSocketFactory());
       System.out.println("Getting the platform's MBean Server");
       MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
