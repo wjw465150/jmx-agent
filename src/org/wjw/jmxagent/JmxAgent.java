@@ -88,6 +88,7 @@ public class JmxAgent {
       }
 
       final String localHostname = InetAddress.getLocalHost().getHostName();
+      System.setProperty("java.rmi.server.hostname", jmxHost);
       LocateRegistry.createRegistry(jmxPort);
       //LocateRegistry.createRegistry(jmxPort, RMISocketFactory.getDefaultSocketFactory(), RMISocketFactory.getDefaultSocketFactory());
       System.out.println("Getting the platform's MBean Server");
@@ -96,8 +97,8 @@ public class JmxAgent {
       JMXServiceURL localUrl = new JMXServiceURL("service:jmx:rmi://" + localHostname + ":" + jmxPort + "/jndi/rmi://"
           + localHostname + ":" + jmxPort + "/jmxrmi");
 
-      JMXServiceURL hostUrl = new JMXServiceURL("service:jmx:rmi://" + jmxHost + ":" + jmxPort + "/jndi/rmi://"
-          + jmxHost + ":" + jmxPort + "/jmxrmi");
+      JMXServiceURL hostUrl = new JMXServiceURL("service:jmx:rmi://" + "0.0.0.0" + ":" + jmxPort + "/jndi/rmi://"
+          + "0.0.0.0" + ":" + jmxPort + "/jmxrmi");
 
       System.out.println("InetAddress.getLocalHost().getHostName() Connection URL: " + localUrl);
       System.out.println("Used host Connection URL: " + hostUrl);
